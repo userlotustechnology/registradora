@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ValueRecord;
 use App\Models\EndCustomer;
+use App\Http\Requests\ValueRecordRequest;
 use Illuminate\Http\Request;
 
 class ValueRecordController extends Controller
@@ -33,6 +34,8 @@ class ValueRecordController extends Controller
                     'installments' => $record->installments,
                     'installment_amount' => $record->installment_amount,
                     'description' => $record->description,
+                    'order_reference' => $record->order_reference,
+                    'payment_type' => $record->payment_type,
                     'created_at' => $record->created_at,
                     'updated_at' => $record->updated_at,
                 ];
@@ -44,17 +47,11 @@ class ValueRecordController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ValueRecordRequest $request)
     {
         $partner = $request->user();
 
-        $validated = $request->validate([
-            'end_customer_uuid' => 'required|string',
-            'total_amount' => 'required|numeric|min:0',
-            'transaction_type' => 'required|in:credit,debit',
-            'installments' => 'required|integer|min:1',
-            'description' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         // Busca o cliente pelo UUID
         $customer = EndCustomer::where('uuid', $validated['end_customer_uuid'])
@@ -81,6 +78,8 @@ class ValueRecordController extends Controller
             'installments' => $record->installments,
             'installment_amount' => $record->installment_amount,
             'description' => $record->description,
+            'order_reference' => $record->order_reference,
+            'payment_type' => $record->payment_type,
             'created_at' => $record->created_at,
             'updated_at' => $record->updated_at,
         ], 201);
@@ -110,6 +109,8 @@ class ValueRecordController extends Controller
             'installments' => $record->installments,
             'installment_amount' => $record->installment_amount,
             'description' => $record->description,
+            'order_reference' => $record->order_reference,
+            'payment_type' => $record->payment_type,
             'created_at' => $record->created_at,
             'updated_at' => $record->updated_at,
         ]);
@@ -118,7 +119,7 @@ class ValueRecordController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $uuid)
+    public function update(ValueRecordRequest $request, $uuid)
     {
         $partner = $request->user();
 
@@ -126,13 +127,7 @@ class ValueRecordController extends Controller
             ->where('uuid', $uuid)
             ->firstOrFail();
 
-        $validated = $request->validate([
-            'end_customer_uuid' => 'required|string',
-            'total_amount' => 'required|numeric|min:0',
-            'transaction_type' => 'required|in:credit,debit',
-            'installments' => 'required|integer|min:1',
-            'description' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         // Busca o cliente pelo UUID
         $customer = EndCustomer::where('uuid', $validated['end_customer_uuid'])
@@ -158,6 +153,8 @@ class ValueRecordController extends Controller
             'installments' => $record->installments,
             'installment_amount' => $record->installment_amount,
             'description' => $record->description,
+            'order_reference' => $record->order_reference,
+            'payment_type' => $record->payment_type,
             'created_at' => $record->created_at,
             'updated_at' => $record->updated_at,
         ]);

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login - Nossa Paroquia Online')
+@section('title', 'Login - Registradora de Valores')
 
 @section('content')
 <div class="container-fluid">

@@ -109,4 +109,40 @@ class EndCustomerController extends Controller
             'message' => 'Cliente excluído com sucesso.'
         ], 200);
     }
-}
+
+    /**
+     * Get customer balance (credits - debits).
+     */
+    public function balance(Request $request, $uuid)
+    {
+        $partner = $request->user();
+
+        $customer = EndCustomer::where('partner_id', $partner->id)
+            ->where('uuid', $uuid)
+            ->firstOrFail();
+
+        // Calcular total de créditos
+        $totalCredits = $customer->valueRecords()
+            ->where('transaction_type', 'credit')
+            ->sum('total_amount');
+
+        // Calcular total de débitos
+        $totalDebits = $customer->valueRecords()
+            ->where('transaction_type', 'debit')
+            ->sum('total_amount');
+
+        // Saldo = Créditos - Débitos
+        $balance = $totalCredits - $totalDebits;
+
+        return response()->json([
+            'customer' => [
+                'uuid' => $customer->uuid,
+                'name' => $customer->name,
+                'document' => $customer->document,
+            ],
+            'balance' => number_format($balance, 2, '.', ''),
+            'total_credits' => number_format($totalCredits, 2, '.', ''),
+            'total_debits' => number_format($totalDebits, 2, '.', ''),
+            'transactions_count' => $customer->valueRecords()->count(),
+        ]);
+    }

@@ -342,6 +342,18 @@
 											"key": "description",
 											"value": "Pagamento de serviço contratado",
 											"type": "text"
+										},
+										{
+											"key": "order_reference",
+											"value": "ORD-2025-001",
+											"type": "text",
+											"description": "Referência do pedido relacionado (opcional)"
+										},
+										{
+											"key": "payment_type",
+											"value": "pix",
+											"type": "text",
+											"description": "Tipo de pagamento para crédito: pix, boleto, cartao_credito, outro"
 										}
 									]
 								},
@@ -398,6 +410,18 @@
 											"key": "description",
 											"value": "Compra à vista",
 											"type": "text"
+										},
+										{
+											"key": "order_reference",
+											"value": "ORD-2025-002",
+											"type": "text",
+											"description": "Referência do pedido relacionado (opcional)"
+										},
+										{
+											"key": "payment_type",
+											"value": "estorno_total",
+											"type": "text",
+											"description": "Tipo de pagamento para débito: estorno_total, estorno_parcial, chargeback, taxa"
 										}
 									]
 								},
@@ -436,7 +460,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"partner_id\": 1,\n    \"end_customer_id\": 1,\n    \"total_amount\": 2000.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 4,\n    \"description\": \"Valor atualizado\"\n}"
+									"raw": "{\n    \"partner_id\": 1,\n    \"end_customer_id\": 1,\n    \"total_amount\": 2000.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 4,\n    \"description\": \"Valor atualizado\",\n    \"order_reference\": \"ORD-2025-003\",\n    \"payment_type\": \"boleto\"\n}"
 								},
 								"url": {
 									"raw": "{{base_url}}/admin/value-records/1",
@@ -594,6 +618,28 @@
 									"path": ["api", "customers", "1"]
 								}
 							}
+						},
+						{
+							"name": "Consultar Saldo do Cliente",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/customers/{{customer_uuid}}/balance",
+									"host": ["{{base_url}}"],
+									"path": ["api", "customers", "{{customer_uuid}}", "balance"]
+								},
+								"description": "Retorna o saldo do cliente (créditos - débitos), total de créditos, débitos e quantidade de transações"
+							}
 						}
 					]
 				},
@@ -641,7 +687,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"end_customer_id\": 1,\n    \"total_amount\": 3500.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 5,\n    \"description\": \"Pagamento via API - Serviço Premium\"\n}"
+									"raw": "{\n    \"end_customer_uuid\": \"{{customer_uuid}}\",\n    \"total_amount\": 3500.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 5,\n    \"description\": \"Pagamento via API - Serviço Premium\",\n    \"order_reference\": \"ORD-API-2025-001\",\n    \"payment_type\": \"pix\"\n}"
 								},
 								"url": {
 									"raw": "{{base_url}}/api/records",
@@ -670,7 +716,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"end_customer_id\": 1,\n    \"total_amount\": 800.00,\n    \"transaction_type\": \"debit\",\n    \"installments\": 1,\n    \"description\": \"Compra via API\"\n}"
+									"raw": "{\n    \"end_customer_uuid\": \"{{customer_uuid}}\",\n    \"total_amount\": 800.00,\n    \"transaction_type\": \"debit\",\n    \"installments\": 1,\n    \"description\": \"Compra via API\",\n    \"order_reference\": \"ORD-API-2025-002\",\n    \"payment_type\": \"chargeback\"\n}"
 								},
 								"url": {
 									"raw": "{{base_url}}/api/records",
@@ -699,7 +745,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"end_customer_id\": 1,\n    \"total_amount\": 12000.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 12,\n    \"description\": \"Mensalidade anual parcelada em 12x\"\n}"
+									"raw": "{\n    \"end_customer_uuid\": \"{{customer_uuid}}\",\n    \"total_amount\": 12000.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 12,\n    \"description\": \"Mensalidade anual parcelada em 12x\",\n    \"order_reference\": \"ORD-API-2025-003\",\n    \"payment_type\": \"cartao_credito\"\n}"
 								},
 								"url": {
 									"raw": "{{base_url}}/api/records",
@@ -750,7 +796,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"end_customer_id\": 1,\n    \"total_amount\": 4000.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 4,\n    \"description\": \"Registro atualizado via API\"\n}"
+									"raw": "{\n    \"end_customer_uuid\": \"{{customer_uuid}}\",\n    \"total_amount\": 4000.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 4,\n    \"description\": \"Registro atualizado via API\",\n    \"order_reference\": \"ORD-API-2025-004\",\n    \"payment_type\": \"boleto\"\n}"
 								},
 								"url": {
 									"raw": "{{base_url}}/api/records/1",
@@ -842,6 +888,12 @@
 			"key": "api_token",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "customer_uuid",
+			"value": "",
+			"type": "string",
+			"description": "UUID do cliente final para usar nas requisições da API"
 		}
 	]
 }

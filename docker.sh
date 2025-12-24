@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script para gerenciar o ambiente Docker do projeto Nossa Paroquia Online
+# Script para gerenciar o ambiente Docker do projeto Registradora de Valores
 
 case "$1" in
     "up")

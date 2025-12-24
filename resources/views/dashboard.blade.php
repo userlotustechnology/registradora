@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Dashboard - Nossa Paroquia Online')
+@section('title', 'Dashboard - Registradora de Valores')
 
 @section('content')
 <div class="card bg-white p-20 rounded-10 border border-white mb-4 py-50">

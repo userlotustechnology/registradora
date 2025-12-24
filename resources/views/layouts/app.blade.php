@@ -20,7 +20,7 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
     
     <!-- Title -->
-    <title>@yield('title', 'Nossa Paroquia Online')</title>
+    <title>@yield('title', 'Registradora de Valores')</title>
 </head>
 <body class="bg-body-bg">
     

@@ -60,7 +60,7 @@
                     <form>
                         <div class="mb-3">
                             <label class="form-label">Nome do Sistema</label>
-                            <input type="text" class="form-control" value="Nossa Paroquia Online">
+                            <input type="text" class="form-control" value="Registradora de Valores">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Versão</label>

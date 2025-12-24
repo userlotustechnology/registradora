@@ -27,6 +27,9 @@ Route::middleware(AuthenticatePartnerApi::class)->group(function () {
 
     // Gerenciamento de clientes finais
     Route::apiResource('customers', EndCustomerController::class);
+    
+    // Consultar saldo do cliente
+    Route::get('customers/{uuid}/balance', [EndCustomerController::class, 'balance']);
 
     // Gerenciamento de registros de valores
     Route::apiResource('records', ValueRecordController::class);

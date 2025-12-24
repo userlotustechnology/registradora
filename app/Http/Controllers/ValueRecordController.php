@@ -6,6 +6,7 @@ use App\Models\ValueRecord;
 use App\Models\Partner;
 use App\Models\EndCustomer;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ValueRecordController extends Controller
 {
@@ -47,14 +48,25 @@ class ValueRecordController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $rules = [
             'partner_id' => 'required|exists:partners,id',
             'end_customer_id' => 'required|exists:end_customers,id',
             'total_amount' => 'required|numeric|min:0',
             'transaction_type' => 'required|in:credit,debit',
             'installments' => 'required|integer|min:1',
             'description' => 'nullable|string',
-        ]);
+            'order_reference' => 'nullable|string|max:255',
+        ];
+
+        // Validação condicional do payment_type
+        $transactionType = $request->input('transaction_type');
+        if ($transactionType === 'credit') {
+            $rules['payment_type'] = ['required', Rule::in(['pix', 'boleto', 'cartao_credito', 'outro'])];
+        } elseif ($transactionType === 'debit') {
+            $rules['payment_type'] = ['required', Rule::in(['estorno_total', 'estorno_parcial', 'chargeback', 'taxa'])];
+        }
+
+        $validated = $request->validate($rules);
 
         // Calcular valor da parcela
         $validated['installment_amount'] = $validated['total_amount'] / $validated['installments'];
@@ -90,14 +102,25 @@ class ValueRecordController extends Controller
      */
     public function update(Request $request, ValueRecord $valueRecord)
     {
-        $validated = $request->validate([
+        $rules = [
             'partner_id' => 'required|exists:partners,id',
             'end_customer_id' => 'required|exists:end_customers,id',
             'total_amount' => 'required|numeric|min:0',
             'transaction_type' => 'required|in:credit,debit',
             'installments' => 'required|integer|min:1',
             'description' => 'nullable|string',
-        ]);
+            'order_reference' => 'nullable|string|max:255',
+        ];
+
+        // Validação condicional do payment_type
+        $transactionType = $request->input('transaction_type');
+        if ($transactionType === 'credit') {
+            $rules['payment_type'] = ['required', Rule::in(['pix', 'boleto', 'cartao_credito', 'outro'])];
+        } elseif ($transactionType === 'debit') {
+            $rules['payment_type'] = ['required', Rule::in(['estorno_total', 'estorno_parcial', 'chargeback', 'taxa'])];
+        }
+
+        $validated = $request->validate($rules);
 
         // Calcular valor da parcela
         $validated['installment_amount'] = $validated['total_amount'] / $validated['installments'];

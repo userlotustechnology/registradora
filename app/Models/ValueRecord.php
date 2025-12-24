@@ -20,6 +20,8 @@ class ValueRecord extends Model
         'installments',
         'installment_amount',
         'description',
+        'order_reference',
+        'payment_type',
     ];
 
     protected $casts = [

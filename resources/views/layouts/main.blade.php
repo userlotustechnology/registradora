@@ -26,7 +26,7 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
     
     <!-- Title -->
-    <title>@yield('title', 'Nossa Paroquia Online')</title>
+    <title>@yield('title', 'Registradora de Valores')</title>
 </head>
 <body class="bg-body-bg">
     
@@ -479,7 +479,7 @@
 
             <!-- Start Footer Area -->
             <footer class="footer-area bg-white text-center rounded-10 rounded-bottom-0">
-                <p class="fs-16 text-body">© <span class="text-secondary">Nossa Paroquia Online</span> - Sistema de Gestão Paroquial</p>
+                <p class="fs-16 text-body">© <span class="text-secondary">Registradora de Valores</span> - Sistema de Gestão Paroquial</p>
             </footer>
             <!-- End Footer Area -->
         </div>
