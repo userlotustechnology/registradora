@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\ValueRecord;
+use App\Observers\ValueRecordObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
-    }
+        ValueRecord::observe(ValueRecordObserver::class);    }
 }

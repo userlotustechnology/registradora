@@ -23,6 +23,8 @@ class EndCustomerController extends Controller
                     'uuid' => $customer->uuid,
                     'name' => $customer->name,
                     'document' => $customer->document,
+                    'available_balance' => $customer->available_balance,
+                    'credit_balance' => $customer->credit_balance,
                     'created_at' => $customer->created_at,
                     'updated_at' => $customer->updated_at,
                 ];
@@ -52,6 +54,8 @@ class EndCustomerController extends Controller
             'uuid' => $customer->uuid,
             'name' => $customer->name,
             'document' => $customer->document,
+            'available_balance' => $customer->available_balance,
+            'credit_balance' => $customer->credit_balance,
             'created_at' => $customer->created_at,
             'updated_at' => $customer->updated_at,
         ], 201);
@@ -121,18 +125,25 @@ class EndCustomerController extends Controller
             ->where('uuid', $uuid)
             ->firstOrFail();
 
-        // Calcular total de créditos
+        // Calcular total de créditos e débitos para estatísticas
         $totalCredits = $customer->valueRecords()
             ->where('transaction_type', 'credit')
             ->sum('total_amount');
 
-        // Calcular total de débitos
         $totalDebits = $customer->valueRecords()
             ->where('transaction_type', 'debit')
             ->sum('total_amount');
 
-        // Saldo = Créditos - Débitos
-        $balance = $totalCredits - $totalDebits;
+        // Calcular totais por tipo de pagamento
+        $pixBoletoCredits = $customer->valueRecords()
+            ->where('transaction_type', 'credit')
+            ->whereIn('payment_type', ['pix', 'boleto'])
+            ->sum('total_amount');
+
+        $creditCardCredits = $customer->valueRecords()
+            ->where('transaction_type', 'credit')
+            ->where('payment_type', 'cartao_credito')
+            ->sum('total_amount');
 
         return response()->json([
             'customer' => [
@@ -140,9 +151,17 @@ class EndCustomerController extends Controller
                 'name' => $customer->name,
                 'document' => $customer->document,
             ],
-            'balance' => number_format($balance, 2, '.', ''),
-            'total_credits' => number_format($totalCredits, 2, '.', ''),
-            'total_debits' => number_format($totalDebits, 2, '.', ''),
+            'balances' => [
+                'available_balance' => number_format($customer->available_balance, 2, '.', ''),
+                'credit_balance' => number_format($customer->credit_balance, 2, '.', ''),
+                'total_balance' => number_format($customer->available_balance + $customer->credit_balance, 2, '.', ''),
+            ],
+            'breakdown' => [
+                'pix_boleto_credits' => number_format($pixBoletoCredits, 2, '.', ''),
+                'credit_card_credits' => number_format($creditCardCredits, 2, '.', ''),
+                'total_credits' => number_format($totalCredits, 2, '.', ''),
+                'total_debits' => number_format($totalDebits, 2, '.', ''),
+            ],
             'transactions_count' => $customer->valueRecords()->count(),
         ]);
     }

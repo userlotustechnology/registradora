@@ -16,6 +16,16 @@ class EndCustomer extends Model
         'partner_id',
         'name',
         'document',
+        'available_balance',
+        'credit_balance',
+        'credit_card_receipt_type',
+        'credit_card_days',
+    ];
+
+    protected $casts = [
+        'available_balance' => 'decimal:2',
+        'credit_balance' => 'decimal:2',
+        'credit_card_days' => 'integer',
     ];
 
     protected static function boot()
@@ -51,5 +61,13 @@ class EndCustomer extends Model
     public function valueRecords()
     {
         return $this->hasMany(ValueRecord::class);
+    }
+
+    /**
+     * Relacionamento com liberações agendadas de cartão de crédito
+     */
+    public function creditCardReleases()
+    {
+        return $this->hasMany(CreditCardRelease::class);
     }
 }
