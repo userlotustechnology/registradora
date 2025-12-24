@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EndCustomerController;
 use App\Http\Controllers\Api\ValueRecordController;
+use App\Http\Middleware\AuthenticatePartnerApi;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +17,8 @@ use App\Http\Controllers\Api\ValueRecordController;
 |
 */
 
-// Rotas protegidas por autenticação de API (Sanctum)
-Route::middleware('auth:sanctum')->group(function () {
+// Rotas protegidas por autenticação de API via Token do Parceiro
+Route::middleware(AuthenticatePartnerApi::class)->group(function () {
     
     // Informações do parceiro autenticado
     Route::get('/partner', function (Request $request) {
@@ -30,3 +31,4 @@ Route::middleware('auth:sanctum')->group(function () {
     // Gerenciamento de registros de valores
     Route::apiResource('records', ValueRecordController::class);
 });
+

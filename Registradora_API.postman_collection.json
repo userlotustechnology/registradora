@@ -1,0 +1,847 @@
+{
+	"info": {
+		"_postman_id": "registradora-api-collection",
+		"name": "Registradora API",
+		"description": "Collection completa para testar a API do sistema Registradora",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Web - Admin",
+			"item": [
+				{
+					"name": "Partners",
+					"item": [
+						{
+							"name": "Listar Parceiros",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/partners",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "partners"]
+								}
+							}
+						},
+						{
+							"name": "Criar Parceiro",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}",
+										"description": "Token CSRF obtido do formulário"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Parceiro Teste LTDA",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "contato@parceiroteste.com.br",
+											"type": "text"
+										},
+										{
+											"key": "document",
+											"value": "12345678000199",
+											"type": "text"
+										},
+										{
+											"key": "is_active",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/partners",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "partners"]
+								}
+							}
+						},
+						{
+							"name": "Visualizar Parceiro",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/partners/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "partners", "1"]
+								}
+							}
+						},
+						{
+							"name": "Atualizar Parceiro",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Parceiro Teste Atualizado\",\n    \"email\": \"novo@parceiroteste.com.br\",\n    \"document\": \"12345678000199\",\n    \"is_active\": 1\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/partners/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "partners", "1"]
+								}
+							}
+						},
+						{
+							"name": "Deletar Parceiro",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/partners/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "partners", "1"]
+								}
+							}
+						},
+						{
+							"name": "Regenerar Token API",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/partners/1/regenerate-token",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "partners", "1", "regenerate-token"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "End Customers",
+					"item": [
+						{
+							"name": "Listar Clientes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/end-customers",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "end-customers"]
+								}
+							}
+						},
+						{
+							"name": "Criar Cliente",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "partner_id",
+											"value": "1",
+											"type": "text",
+											"description": "ID do parceiro"
+										},
+										{
+											"key": "name",
+											"value": "João da Silva",
+											"type": "text"
+										},
+										{
+											"key": "document",
+											"value": "12345678901",
+											"type": "text",
+											"description": "CPF ou CNPJ"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/end-customers",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "end-customers"]
+								}
+							}
+						},
+						{
+							"name": "Visualizar Cliente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/end-customers/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "end-customers", "1"]
+								}
+							}
+						},
+						{
+							"name": "Atualizar Cliente",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"partner_id\": 1,\n    \"name\": \"João da Silva Atualizado\",\n    \"document\": \"12345678901\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/end-customers/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "end-customers", "1"]
+								}
+							}
+						},
+						{
+							"name": "Deletar Cliente",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/end-customers/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "end-customers", "1"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Value Records",
+					"item": [
+						{
+							"name": "Listar Registros",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/value-records",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "value-records"]
+								}
+							}
+						},
+						{
+							"name": "Listar com Filtros",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/value-records?partner_id=1&transaction_type=credit",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "value-records"],
+									"query": [
+										{
+											"key": "partner_id",
+											"value": "1"
+										},
+										{
+											"key": "transaction_type",
+											"value": "credit"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Criar Registro",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "partner_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "end_customer_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "total_amount",
+											"value": "1500.50",
+											"type": "text"
+										},
+										{
+											"key": "transaction_type",
+											"value": "credit",
+											"type": "text",
+											"description": "credit ou debit"
+										},
+										{
+											"key": "installments",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Pagamento de serviço contratado",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/value-records",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "value-records"]
+								}
+							}
+						},
+						{
+							"name": "Criar Registro Débito",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "partner_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "end_customer_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "total_amount",
+											"value": "2500.00",
+											"type": "text"
+										},
+										{
+											"key": "transaction_type",
+											"value": "debit",
+											"type": "text"
+										},
+										{
+											"key": "installments",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Compra à vista",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/value-records",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "value-records"]
+								}
+							}
+						},
+						{
+							"name": "Visualizar Registro",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/value-records/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "value-records", "1"]
+								}
+							}
+						},
+						{
+							"name": "Atualizar Registro",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"partner_id\": 1,\n    \"end_customer_id\": 1,\n    \"total_amount\": 2000.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 4,\n    \"description\": \"Valor atualizado\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/value-records/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "value-records", "1"]
+								}
+							}
+						},
+						{
+							"name": "Deletar Registro",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "{{csrf_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/value-records/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "value-records", "1"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "API - Parceiros (via API Token)",
+			"item": [
+				{
+					"name": "Customers",
+					"item": [
+						{
+							"name": "Listar Meus Clientes",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}",
+										"description": "Token API do parceiro"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/customers",
+									"host": ["{{base_url}}"],
+									"path": ["api", "customers"]
+								},
+								"description": "Lista todos os clientes do parceiro autenticado"
+							}
+						},
+						{
+							"name": "Criar Cliente",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Maria Santos\",\n    \"document\": \"98765432100\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/customers",
+									"host": ["{{base_url}}"],
+									"path": ["api", "customers"]
+								}
+							}
+						},
+						{
+							"name": "Visualizar Cliente",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/customers/1",
+									"host": ["{{base_url}}"],
+									"path": ["api", "customers", "1"]
+								}
+							}
+						},
+						{
+							"name": "Atualizar Cliente",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Maria Santos Oliveira\",\n    \"document\": \"98765432100\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/customers/1",
+									"host": ["{{base_url}}"],
+									"path": ["api", "customers", "1"]
+								}
+							}
+						},
+						{
+							"name": "Deletar Cliente",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/customers/1",
+									"host": ["{{base_url}}"],
+									"path": ["api", "customers", "1"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Records",
+					"item": [
+						{
+							"name": "Listar Meus Registros",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/records",
+									"host": ["{{base_url}}"],
+									"path": ["api", "records"]
+								}
+							}
+						},
+						{
+							"name": "Criar Registro de Crédito",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"end_customer_id\": 1,\n    \"total_amount\": 3500.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 5,\n    \"description\": \"Pagamento via API - Serviço Premium\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/records",
+									"host": ["{{base_url}}"],
+									"path": ["api", "records"]
+								}
+							}
+						},
+						{
+							"name": "Criar Registro de Débito",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"end_customer_id\": 1,\n    \"total_amount\": 800.00,\n    \"transaction_type\": \"debit\",\n    \"installments\": 1,\n    \"description\": \"Compra via API\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/records",
+									"host": ["{{base_url}}"],
+									"path": ["api", "records"]
+								}
+							}
+						},
+						{
+							"name": "Criar Registro Parcelado",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"end_customer_id\": 1,\n    \"total_amount\": 12000.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 12,\n    \"description\": \"Mensalidade anual parcelada em 12x\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/records",
+									"host": ["{{base_url}}"],
+									"path": ["api", "records"]
+								},
+								"description": "Exemplo de parcelamento em 12x de R$ 12.000,00 = R$ 1.000,00/mês"
+							}
+						},
+						{
+							"name": "Visualizar Registro",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/records/1",
+									"host": ["{{base_url}}"],
+									"path": ["api", "records", "1"]
+								}
+							}
+						},
+						{
+							"name": "Atualizar Registro",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"end_customer_id\": 1,\n    \"total_amount\": 4000.00,\n    \"transaction_type\": \"credit\",\n    \"installments\": 4,\n    \"description\": \"Registro atualizado via API\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/records/1",
+									"host": ["{{base_url}}"],
+									"path": ["api", "records", "1"]
+								}
+							}
+						},
+						{
+							"name": "Deletar Registro",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{api_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/records/1",
+									"host": ["{{base_url}}"],
+									"path": ["api", "records", "1"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Informações do Parceiro",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{api_token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/partner",
+							"host": ["{{base_url}}"],
+							"path": ["api", "partner"]
+						},
+						"description": "Retorna informações do parceiro autenticado"
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "csrf_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "api_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

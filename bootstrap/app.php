@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckRole::class,
             'csp' => \App\Http\Middleware\ContentSecurityPolicy::class,
+            'partner.api' => \App\Http\Middleware\AuthenticatePartnerApi::class,
         ]);
         
         // Apply CSP middleware to web routes

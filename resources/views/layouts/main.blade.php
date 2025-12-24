@@ -97,6 +97,63 @@
                     </ul>
                 </li>
 
+                <li class="menu-item {{ request()->routeIs('admin.partners.*') ? 'open' : '' }}">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}">
+                        <span class="material-symbols-outlined menu-icon">business</span>
+                        <span class="title">Parceiros</span>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{ route('admin.partners.index') }}" class="menu-link {{ request()->routeIs('admin.partners.index') ? 'active' : '' }}">
+                                Listar Parceiros
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('admin.partners.create') }}" class="menu-link {{ request()->routeIs('admin.partners.create') ? 'active' : '' }}">
+                                Adicionar Parceiro
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="menu-item {{ request()->routeIs('admin.end-customers.*') ? 'open' : '' }}">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle {{ request()->routeIs('admin.end-customers.*') ? 'active' : '' }}">
+                        <span class="material-symbols-outlined menu-icon">people</span>
+                        <span class="title">Clientes Finais</span>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{ route('admin.end-customers.index') }}" class="menu-link {{ request()->routeIs('admin.end-customers.index') ? 'active' : '' }}">
+                                Listar Clientes
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('admin.end-customers.create') }}" class="menu-link {{ request()->routeIs('admin.end-customers.create') ? 'active' : '' }}">
+                                Adicionar Cliente
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="menu-item {{ request()->routeIs('admin.value-records.*') ? 'open' : '' }}">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle {{ request()->routeIs('admin.value-records.*') ? 'active' : '' }}">
+                        <span class="material-symbols-outlined menu-icon">receipt_long</span>
+                        <span class="title">Registros de Valores</span>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{ route('admin.value-records.index') }}" class="menu-link {{ request()->routeIs('admin.value-records.index') ? 'active' : '' }}">
+                                Listar Registros
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('admin.value-records.create') }}" class="menu-link {{ request()->routeIs('admin.value-records.create') ? 'active' : '' }}">
+                                Adicionar Registro
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="menu-item {{ request()->routeIs('paroquia.*') ? 'open' : '' }}">
                     <a href="javascript:void(0);" class="menu-link menu-toggle {{ request()->routeIs('paroquia.*') ? 'active' : '' }}">
                         <span class="material-symbols-outlined menu-icon">church</span>
