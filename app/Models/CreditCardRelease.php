@@ -51,3 +51,4 @@ class CreditCardRelease extends Model
     {
         return $this->belongsTo(EndCustomer::class);
     }
+}

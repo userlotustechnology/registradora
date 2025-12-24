@@ -117,18 +117,82 @@ class AuthController extends Controller
      */
     public function dashboard()
     {
-        // Dados simulados para o dashboard baseado no template CRM
+        // Busca dados reais do sistema
+        $totalPartners = \App\Models\Partner::count();
+        $totalCustomers = \App\Models\EndCustomer::count();
+        $totalTransactions = \App\Models\ValueRecord::count();
+        
+        // Novos clientes no mês atual
+        $newCustomersMonth = \App\Models\EndCustomer::whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count();
+        
+        // Total de saldos
+        $totalAvailableBalance = \App\Models\EndCustomer::sum('available_balance');
+        $totalCreditBalance = \App\Models\EndCustomer::sum('credit_balance');
+        $totalBalance = $totalAvailableBalance + $totalCreditBalance;
+        
+        // Transações do mês
+        $transactionsMonth = \App\Models\ValueRecord::whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count();
+        
+        // Total de créditos e débitos do mês
+        $creditsMonth = \App\Models\ValueRecord::where('transaction_type', 'credit')
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->sum('total_amount');
+            
+        $debitsMonth = \App\Models\ValueRecord::where('transaction_type', 'debit')
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->sum('total_amount');
+        
+        // Liberações pendentes de cartão de crédito
+        $pendingReleases = \App\Models\CreditCardRelease::where('processed', false)
+            ->count();
+            
+        $pendingReleasesAmount = \App\Models\CreditCardRelease::where('processed', false)
+            ->sum('amount');
+        
+        // Transações recentes
+        $recentTransactions = \App\Models\ValueRecord::with(['endCustomer', 'partner'])
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get();
+        
+        // Top clientes por saldo total
+        $topCustomers = \App\Models\EndCustomer::selectRaw('*, (available_balance + credit_balance) as total_balance')
+            ->orderByDesc('total_balance')
+            ->limit(5)
+            ->get();
+        
+        // Créditos por tipo de pagamento no mês
+        $creditsByPaymentType = \App\Models\ValueRecord::where('transaction_type', 'credit')
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->selectRaw('payment_type, SUM(total_amount) as total')
+            ->groupBy('payment_type')
+            ->get()
+            ->pluck('total', 'payment_type')
+            ->toArray();
+        
         $stats = [
-            'new_members' => 25,
-            'active_members' => 450,
-            'active_events' => 8,
-            'monthly_donations' => 15750.00,
-            'total_members' => 150,
-            'events_month' => 8,
-            'dizimos_month' => 12500.50,
-            'ministries' => 12,
+            'total_partners' => $totalPartners,
+            'total_customers' => $totalCustomers,
+            'total_transactions' => $totalTransactions,
+            'new_customers_month' => $newCustomersMonth,
+            'total_available_balance' => $totalAvailableBalance,
+            'total_credit_balance' => $totalCreditBalance,
+            'total_balance' => $totalBalance,
+            'transactions_month' => $transactionsMonth,
+            'credits_month' => $creditsMonth,
+            'debits_month' => $debitsMonth,
+            'pending_releases' => $pendingReleases,
+            'pending_releases_amount' => $pendingReleasesAmount,
+            'credits_by_payment_type' => $creditsByPaymentType,
         ];
 
-        return view('dashboard', compact('stats'));
+        return view('dashboard', compact('stats', 'recentTransactions', 'topCustomers'));
     }
 }
